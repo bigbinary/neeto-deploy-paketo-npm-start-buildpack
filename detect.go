@@ -30,8 +30,8 @@ func Detect(reloader Reloader) packit.DetectFunc {
 			return packit.DetectResult{}, fmt.Errorf("failed to open package.json: %w", err)
 		}
 
-		if !pkg.HasStartScript() {
-			return packit.DetectResult{}, packit.Fail.WithMessage(NoStartScriptError)
+		if pkg.HasStartScript() {
+			fmt.Println("===============> Start script:", pkg.Scripts.Start)
 		}
 
 		requirements := []packit.BuildPlanRequirement{
@@ -50,7 +50,7 @@ func Detect(reloader Reloader) packit.DetectFunc {
 			{
 				Name: NodeModules,
 				Metadata: map[string]interface{}{
-					"launch": true,
+					"launch": false,
 				},
 			},
 		}
